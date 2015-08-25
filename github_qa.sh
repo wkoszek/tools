@@ -19,10 +19,11 @@ CI_CONFIGS=".travis.yml circle.yml wercker.yml appveyor.yml"
 function github_qa_check_ci_enabled() {
 	RET=0
 	for CI_CONFIG in ${CI_CONFIGS}; do
-		if [ -e $1/${CI_CONFIG} ]; then
+		if [ -e ${CI_CONFIG} ]; then
 			RET=1
 		fi
 	done
+
 	if [ $RET -eq 0 ]; then
 		echo "$1 doesn't have a continuous integration system enabled!"
 	fi
@@ -52,4 +53,3 @@ function github_qa_check_all() {
 }
 
 github_qa_check_all
-
