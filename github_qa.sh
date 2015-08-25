@@ -14,12 +14,28 @@ if [ "x$2" != "x" ]; then
 	USER=$2
 fi
 
+CI_CONFIGS=".travis.yml circle.yml wercker.yml appveyor.yml"
+
+function github_qa_check_ci_enabled() {
+	RET=0
+	for CI_CONFIG in ${CI_CONFIGS}; do
+		if [ -e $1/${CI_CONFIG} ]; then
+			RET=1
+		fi
+	done
+	if [ $RET -eq 0 ]; then
+		echo "$1 doesn't have a continuous integration system enabled!"
+	fi
+	return $RET
+}
+
 function github_qa_check() {
 	(
 		echo =================== $1
 		cd $1
-		make clean 2>&1 > /dev/null
+		#make clean 2>&1 > /dev/null
 		git status --porcelain
+		github_qa_check_ci_enabled $1
 	)
 }
 
