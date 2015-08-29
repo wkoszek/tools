@@ -7,12 +7,11 @@ g_dirs.each do |dir|
 	d = Dir.open(dir)
 	d.each do |file|
 		#print "#{file}"
-		g_cmds.store(file, file)
-		#{file} = 1
+		g_cmds["#{dir}/#{file}"] = dir + file
 	end
 	d.close()
 end
 
-g_cmds.keys.each do |cmd|
+g_cmds.keys.sort.each do |cmd|
 	print "#{cmd}\n"
 end
