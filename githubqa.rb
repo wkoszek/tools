@@ -6,7 +6,7 @@ class SrcRepo
 		@repo_name = repo_name
 		@repo_path = "#{root_repo_path}/#{repo_name}"
 		@score = 0
-		@score_max = 1
+		@score_max = 2
 	end
 
 	def test_one
@@ -15,15 +15,17 @@ class SrcRepo
 		d.close()
 
 		readme_have = !fns_all.select{ |file| file if file == "README.md" }.empty?
+		travis_have = !fns_all.select{ |file| file if file == ".travis.yml" }.empty?
 	
 		if !readme_have then print "README wasn't found in #{@repo_path}\n" else @score += 1 end
-
-		#travis_fn = fns_all.select { |file| file if file == ".travis.yml" }
-		#if not travis_fn then print ".travis.yml wasn't found\n" else @score += 1 end
+		if !travis_have then print ".travis.yml wasn't found in #{@repo_path}\n" else @score += 1 end
 	end
 
 	def score
 		@score
+	end
+	def score_max
+		@score_max
 	end
 
 	def self.repo_test_all(root_repos_path)
@@ -48,12 +50,14 @@ end
 def main(repos_path)
 	repos = SrcRepo.repo_test_all(repos_path)
 
-	pts_score_possible = repos.count
-	pts_score_actual = 0
-	repos.each { |r| pts_score_actual += r.score() }
+	pts_score_actual = repos.map{|r| r.score()}.reduce(:+)
+	pts_score_possible = repos.map{|r| r.score_max()}.reduce(:+)
+	pts_percent = (pts_score_actual.to_f / pts_score_possible.to_f) * 100.00
 
+	print "--\n"
 	print "Possible score    : #{pts_score_possible}\n"
 	print "Your current score: #{pts_score_actual}\n"
+	print "                  : %2.2f%%\n" % pts_percent
 end
 
 main("/w/repos")
