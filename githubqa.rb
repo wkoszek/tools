@@ -19,6 +19,21 @@ class SrcRepo
 	
 		if !readme_have then print "README wasn't found in #{@repo_path}\n" else @score += 1 end
 		if !travis_have then print ".travis.yml wasn't found in #{@repo_path}\n" else @score += 1 end
+
+
+		if false and readme_have then
+			maybe_add_analytics("#{@repo_path}/README.md", @repo_name)
+		end
+	end
+
+	def maybe_add_analytics(path, repo_name)
+		f = File.open(path, "a")
+		user = 'wkoszek'
+		id = "UA-67150227-1"
+		s = "[![Analytics](https://ga-beacon.appspot.com/%s/%s/%s)](https://github.com/%s/%s)\n" % [id, user, repo_name, user, repo_name]
+		print s
+		#f.write(s)
+		f.close()
 	end
 
 	def score
