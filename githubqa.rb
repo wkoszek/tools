@@ -24,6 +24,13 @@ class SrcRepo
 		if false and readme_have then
 			maybe_add_analytics("#{@repo_path}/README.md", @repo_name)
 		end
+		check_github()
+	end
+
+	def check_github()
+		print "----------------------------------------- #{@repo_path} ----------------\n" 
+		system("git status")
+		print "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"
 	end
 
 	def maybe_add_analytics(path, repo_name)
