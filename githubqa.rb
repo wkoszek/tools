@@ -28,9 +28,18 @@ class SrcRepo
 	end
 
 	def check_github()
-		print "----------------------------------------- #{@repo_path} ----------------\n" 
-		system("(cd #{@repo_path} && git status)")
-		print "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"
+		ret = `(cd #{@repo_path} && git status)`
+		ok = false
+		ret.split("\n").each do |s|
+			if s =~ /nothing to commit, working directory clean/ then
+				ok = true
+			end
+		end
+		if not ok then
+			print "----------------------------------------- #{@repo_path} ----------------\n" 
+			print ret
+			print "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"
+		end
 	end
 
 	def maybe_add_analytics(path, repo_name)
