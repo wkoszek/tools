@@ -29,7 +29,7 @@ class SrcRepo
 
 	def check_github()
 		print "----------------------------------------- #{@repo_path} ----------------\n" 
-		system("git status")
+		system("(cd #{@repo_path} && git status)")
 		print "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"
 	end
 
