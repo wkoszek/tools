@@ -1,0 +1,47 @@
+#!/bin/sh
+
+BSDv2URL=https://raw.githubusercontent.com/freebsd/freebsd/master/share/examples/etc/bsd-style-copyright
+REPOS_PATH=/w/repos
+
+set -x
+
+if [ $# -ne 1 ]; then
+	echo "usage: github_repo_new <repo>"
+	exit;
+fi
+
+cd ${REPOS_PATH}
+
+echo "Enter GitHub repo description"
+read DESC
+
+if [ ! -e ~/.licensehdr ]; then
+	echo "Enter your name + email (for the license file)"
+	read EMAIL
+else
+	EMAIL=`cat ~/.licensehdr`
+fi
+
+if [ ! -e ~/.bsd-style-copyright ]; then
+	wget -O - $BSDv2URL | \
+		grep '^ \*' | \
+		cut -d " " -f 3- | \
+		grep -v "control system" > ~/.bsd-style-copyright
+fi
+
+gh re -N $1 --description "$DESC"
+mkdir $1
+(
+	cd $1
+	git init
+	echo "# $DESC" > README.md
+
+	YEAR=`date '+%Y'`
+	cat ~/.bsd-style-copyright | \
+		sed "s,\[year\],$YEAR,g" | \
+		sed "s,\[your name\],$EMAIL,g" > LICENSE.md
+	git add README.md LICENSE.md
+	git commit -m "$DESC"
+	git remote add origin git@github.com:wkoszek/$1.git
+	git push -u origin master
+)
