@@ -15,3 +15,8 @@ Table of Content:
   - builds a C tags and `cscope` databases.
 - github_cleanup.sh
   - GitHub cleanup script.
+
+# Author
+
+- Wojciech Adam Koszek, [wojciech@koszek.com](mailto:wojciech@koszek.com)
+- [http://www.koszek.com](http://www.koszek.com)
