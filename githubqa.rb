@@ -14,12 +14,21 @@ class SrcRepo
 		fns_all = d.map{|fn| fn}
 		d.close()
 
-		readme_have = !fns_all.select{ |file| file if file == "README.md" }.empty?
-		travis_have = !fns_all.select{ |file| file if file == ".travis.yml" }.empty?
-	
-		if !readme_have then print "README wasn't found in #{@repo_path}\n" else @score += 1 end
-		if !travis_have then print ".travis.yml wasn't found in #{@repo_path}\n" else @score += 1 end
+		readme_have = false
+		ci_have = false
+		fns_all.each do |fn|
+			#print "FN---#{fn}\n"
+			if fn == "README.md" then
+				readme_have = true
+			end
+			if fn == ".travis.yml" or fn == "circle.yml" \
+					or fn == "appveyor.yml"
+				ci_have = true
+			end
+		end
 
+		if !readme_have then print "README wasn't found in #{@repo_path}\n" else @score += 1 end
+		if !ci_have then print "CI system config wasn't found in #{@repo_path}\n" else @score += 1 end
 
 		if false and readme_have then
 			maybe_add_analytics("#{@repo_path}/README.md", @repo_name)
