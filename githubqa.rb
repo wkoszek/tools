@@ -71,7 +71,7 @@ class SrcRepo
 	def self.repo_test_all(root_repos_path)
 		repos = []
 		d = Dir.new(root_repos_path)
-		d.map{|i| i}.select{|fn| fn if not fn =~ /\.$/ }.each do |repo_name|
+		d.map{|i| i}.select{|fn| fn if not fn =~ /\./ }.each do |repo_name|
 			repo_path = "#{root_repos_path}/#{repo_name}"
 			next if not File.directory?(repo_path)
 			r = SrcRepo.new(root_repos_path, repo_name)
