@@ -3,7 +3,7 @@
 BSDv2URL=https://raw.githubusercontent.com/freebsd/freebsd/master/share/examples/etc/bsd-style-copyright
 REPOS_PATH=/w/repos
 
-set -x
+set -xe
 
 if [ $# -ne 1 ]; then
 	echo "usage: github_repo_new <repo>"
@@ -29,7 +29,6 @@ if [ ! -e ~/.bsd-style-copyright ]; then
 		grep -v "control system" > ~/.bsd-style-copyright
 fi
 
-gh re -N $1 --description "$DESC"
 mkdir $1
 (
 	cd $1
@@ -41,7 +40,8 @@ mkdir $1
 		sed "s,\[year\],$YEAR,g" | \
 		sed "s,\[your name\],$EMAIL,g" > LICENSE.md
 	git add README.md LICENSE.md
+	../`dirname $0`/git_author_start
 	git commit -m "$DESC"
-	git remote add origin git@github.com:wkoszek/$1.git
+	hub create -d "$DESC"
 	git push -u origin master
 )
