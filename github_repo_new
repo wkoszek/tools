@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BSDv2URL=https://raw.githubusercontent.com/freebsd/freebsd/master/share/examples/etc/bsd-style-copyright
-REPOS_PATH=/w/repos
+REPOS_PATH=~/r
 
 set -xe
 
@@ -40,7 +40,7 @@ mkdir $1
 		sed "s,\[year\],$YEAR,g" | \
 		sed "s,\[your name\],$EMAIL,g" > LICENSE.md
 	git add README.md LICENSE.md
-	../`dirname $0`/git_author_start
+	~/r/tools/git_author_start
 	git commit -m "$DESC"
 	hub create -d "$DESC"
 	git push -u origin master
