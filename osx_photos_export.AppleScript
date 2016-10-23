@@ -10,17 +10,19 @@ set destFolder to (choose folder)
 set dest to POSIX path of destFolder as POSIX file as text -- the destination folder (use a valid path)
 
 tell application "Photos"
-	activate
-	set l to name of albums
-	set albNames to choose from list l with prompt "Select some albums" with multiple selections allowed
-	
-	if albNames is not false then -- not cancelled
-		repeat with tName in albNames
-			set tFolder to dest & tName
-			my makeFolder(tFolder) -- create a folder named (the name of this album) in dest
-			export (get media items of album tName) to (tFolder as alias) without using originals
-		end repeat
-	end if
+	with timeout of 600 seconds
+		activate
+		set l to name of albums
+		set albNames to choose from list l with prompt "Select some albums" with multiple selections allowed
+		
+		if albNames is not false then -- not cancelled
+			repeat with tName in albNames
+				set tFolder to dest & tName
+				my makeFolder(tFolder) -- create a folder named (the name of this album) in dest
+				export (get media items of album tName) to (tFolder as alias) without using originals
+			end repeat
+		end if
+	end timeout
 end tell
 
 on makeFolder(tPath)
