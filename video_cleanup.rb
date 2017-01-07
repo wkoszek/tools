@@ -10,10 +10,12 @@ require 'pp'
 class SmartFile
 	attr_writer :fn, :movie
 
+	@@supported_formats = ["video/quicktime", "video/mp4"]
+
 	def initialize(filename)
 		@fn = filename
 		@movie = nil
-		if mime_type() == "video/quicktime" then
+		if @@supported_formats.include?(mime_type()) then
 			@movie = FFMPEG::Movie.new(@fn)
 		end
 	end
@@ -57,7 +59,7 @@ ARGV.each do |arg|
 end
 
 m_all.each do |m|
-	print "# testing #{m.filename_orig}\n"
+	print "# testing #{m.filename_orig} #{m.mime_type}\n"
 	if m.need_move? then
 		print "mv \"#{m.filename_orig}\" \"#{m.filename_new}\"\n"
 	end
