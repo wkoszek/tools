@@ -42,6 +42,8 @@ class SmartFile
 			return @fn
 		end
 		new_fn = "%04d%02d%02d-%s" % [ct.year, ct.month, ct.day, @fn]
+		new_fn.gsub!(/\s+/, "_")
+		new_fn.gsub!(/-/, "_")
 		return new_fn
 	end
 
