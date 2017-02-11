@@ -11,4 +11,6 @@ if [ $# -lt 1 ]; then
 	exit
 fi
 
-mv -i $* /Volumes/BACKUP3G/COPIED_NEW_BACKUP/home/wkoszek/video/podcast/
+echo "# will copy files: $*"
+
+cp -i $* /Volumes/BACKUP3G/COPIED_NEW_BACKUP/home/wkoszek/video/podcast/
