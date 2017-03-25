@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+D=`date +%Y-%m-%d`
+export GIT_COMMITTER_DATE="${D}T22:13:13"
+export GIT_AUTHOR_DATE="$GIT_COMMITTER_DATE"
+echo $GIT_AUTHOR_DATE
+git commit --verbose $*
