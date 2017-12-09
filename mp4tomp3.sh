@@ -10,4 +10,4 @@ fi
 
 O=`echo "${1}" | sed 's/.mp4//g'`
 
-ffmpeg -i "${1}" ${O}.mp3
+ffmpeg -i "${1}" "${O}.mp3"
