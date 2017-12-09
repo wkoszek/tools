@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+name = ARGV[1]
+
+print name
+
+cmd = %r{
+	git clone git@gitlab.com:wkoszek/infra.git
+	cd infra
+	touch README.md
+	git add README.md
+	git commit -m "add README"
+	git push -u origin master
+}
+print `#{cmd}`
