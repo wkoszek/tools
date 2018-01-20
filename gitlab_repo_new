@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require 'Gitlab'
+require 'fileutils'
+require_relative 'gitlab.rb'
+
+gitlab_init
+
+puts "Give repo name"
+repo_name = ARGF.readline.strip!
+
+puts "Give repo description"
+repo_desc = ARGF.readline.strip!
+
+options = {}
+options[:description] = repo_desc
+options[:default_branch] = "master"
+options[:wiki_enabled] = 0
+options[:wall_enabled] = 0
+options[:issues_enabled] = 0
+options[:snippets_enabled] = 0
+options[:merge_requests_enabled] = 0
+options[:public] = 0
+
+puts "# options"
+puts options
+
+Gitlab.create_project(repo_name, options)
+FileUtils.mkdir(repo_name)
+File.write("#{repo_name}/README.md", "# #{repo_desc}")
+Dir.chdir("#{repo_name}")
+
+`git init`
+`git remote add origin git@gitlab.com:wkoszek/#{repo_name}.git`
+`git add README.md`
+`#{ENV['HOME']}/r/tools/git_author_start`
+`git commit -m "#{repo_desc}"`
+`git push -u origin master`

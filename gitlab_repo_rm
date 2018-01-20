@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'Gitlab'
+require_relative 'gitlab.rb'
+
+gitlab_init
+
+puts "Give repo name"
+repo_name = ARGF.readline.strip!
+
+Gitlab.delete_project(repo_name)
