@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+url = ARGV[0]
+
+s=`lynx --dump #{url} | egrep 'http://' | awk '{ print $2 }'`
+
+puts s
+
+#puts url
+# http://members.tip.net.au/~dbell/
