@@ -5,7 +5,18 @@ require_relative 'gitlab.rb'
 
 gitlab_init
 
-puts "Give repo name"
-repo_name = ARGF.readline.strip!
+if ARGV.length < 1
+  puts "Usage:"
+  puts "\tgitlab_repo_rm <name>"
+  exit 2
+end
+
+repo_name = ARGV[0]
+
+if not repo_name =~ /^wkoszek/
+  repo_name = "wkoszek/" + repo_name
+end
+
+puts "# repo: #{repo_name}"
 
 Gitlab.delete_project(repo_name)
