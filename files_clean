@@ -1,0 +1,47 @@
+#!/bin/sh
+
+D=${HOME}/Downloads
+DIMG=${D}/img
+DDMG=${D}/dmg
+DVID=${D}/vid
+DAUD=${D}/audio
+DDOC=${D}/doc
+DWEB=${D}/web
+
+mkdir -p $D
+mkdir -p $DIMG
+mkdir -p $DDMG
+mkdir -p $DVID
+mkdir -p $DAUD
+mkdir -p $DDOC
+mkdir -p $DWEB
+
+PRE=echo
+if [ "$1" != "--run" ]; then
+	PRE=
+fi
+
+
+find ${D} -iname "*.jpg"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DIMG
+find ${D} -iname "*.jpeg" -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DIMG
+find ${D} -iname "*.png"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DIMG
+find ${D} -iname "*.tiff" -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DIMG
+
+find ${D} -iname "*.dmg"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DDMG
+
+find ${D} -iname "*.avi"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DVID
+find ${D} -iname "*.mpg"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DVID
+find ${D} -iname "*.mpeg" -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DVID
+find ${D} -iname "*.mp4"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DVID
+find ${D} -iname "*.flv"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DVID
+
+find ${D} -iname "*.mp3"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DAUD
+find ${D} -iname "*.mpg"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DAUD
+
+find ${D} -iname "*.pdf"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DDOC
+find ${D} -iname "*.rtf"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DDOC
+find ${D} -iname "*.doc"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DDOC
+find ${D} -iname "*.docx"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DDOC
+
+find ${D} -iname "*.html"  -depth 1 -print0 | xargs -0 -n1 -I@ echo mv -n @ $DWEB
+
