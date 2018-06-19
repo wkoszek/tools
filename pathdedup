@@ -1,0 +1,1 @@
+echo $PATH | tr ':' '\n' | sort -u | grep -v '^$' | tr '\n' ':' | sed 's/:$//g'
