@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'json'
+
+if ARGV.length < 1
+  puts "Usage:"
+  puts "\tyaml_valid <file>"
+  exit
+end
+
+begin
+  fn_in = ARGV[0]
+  data_read = File.read(fn_in)
+  y = YAML.load(data_read)
+  json_str = JSON.pretty_generate(y)
+  puts json_str
+rescue => exp
+  warn exp
+end

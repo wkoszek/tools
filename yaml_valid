@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+if ARGV.length < 1
+  puts "Usage:"
+  puts "\tyaml_valid <file>"
+  exit
+end
+
+begin
+  fn = ARGV[0]
+  f = File.read(fn)
+  y = YAML.load(f)
+  puts y
+rescue => exp
+  warn exp
+end
