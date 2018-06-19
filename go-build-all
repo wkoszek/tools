@@ -1,0 +1,35 @@
+#!/bin/sh
+
+N=$1
+shift
+SRCS=$*;
+
+echo $N
+echo $SRCS
+
+set -e
+
+mkdir -p build
+
+for ARCH in amd64 386 arm ppc64; do
+	for OS in linux darwin windows netbsd; do
+		if [ "$OS" = "darwin" ] && [ "$ARCH" = "arm" ]; then
+			continue
+		fi
+		if [ "$OS" = "darwin" ] && [ "$ARCH" = "ppc64" ]; then
+			continue
+		fi
+		if [ "$OS" = "windows" ] && [ "$ARCH" = "ppc64" ]; then
+			continue
+		fi
+		if [ "$OS" = "netbsd" ] && [ "$ARCH" = "ppc64" ]; then
+			continue
+		fi
+		if [ "$OS" = "windows" ] && [ "$ARCH" = "arm" ]; then
+			continue
+		fi
+		set -x
+		env GOARCH=$ARCH GOOS=$OS go build -o build/${N}.${OS}.${ARCH} $SRCS
+		set +x
+	done
+done
