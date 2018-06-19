@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+# vim: autoindent tabstop=2 shiftwidth=2 expandtab softtabstop=2 filetype=ruby
+# Created at: {{date}}
+# Copyright (c) {{year}} by {{author}}
+
+def html(x)
+  "<html>" + x + "</html>"
+end
+def body(x)
+  "<body>" + x + "</body>"
+end
+def href(link, desc)
+  "<a href=\"#{link}\">#{desc}</a><br />"
+end
+
+all_fns = Dir["*"]
+all_fns -= ["index.html"]
+
+links = ""
+all_fns.each do |f|
+  links += href(f, f)
+end
+
+puts html(body(links))
