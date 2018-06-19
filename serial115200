@@ -1,0 +1,2 @@
+[ `id -u` != 0 ] && echo "must be root" && exit 1
+cu -s 115200 -l ${SERIALDEV}
