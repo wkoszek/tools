@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # vim: autoindent tabstop=2 shiftwidth=2 expandtab softtabstop=2 filetype=ruby
-# Created at: {{date}}
-# Copyright (c) {{year}} by {{author}}
+# Created at: 2018
+# Copyright (c) 2018 Wojciech Adam Koszek <wojciech@koszek.com>
 
 def html(x)
   "<html>" + x + "</html>"
