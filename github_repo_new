@@ -1,5 +1,10 @@
 #!/bin/sh
 
+THIS_SCRIPT=`realpath $0`
+THIS_SCRIPT_DIR=`dirname ${THIS_SCRIPT}`
+
+echo "THIS_SCRIPT_DIR: $THIS_SCRIPT_DIR"
+
 BSDv2URL=https://raw.githubusercontent.com/freebsd/freebsd/master/share/examples/etc/bsd-style-copyright
 REPOS_PATH=~/r
 
@@ -43,7 +48,7 @@ mkdir $1
 		sed "s,\[year\],$YEAR,g" | \
 		sed "s,\[your name\],$EMAIL,g" > LICENSE.md
 	git add README.md LICENSE.md
-	~/r/tools/git_author_start
+	${THIS_SCRIPT_DIR}/git_author_start
 	git commit -m "$DESC"
 	hub create -d "$DESC"
 	git push -u origin master
