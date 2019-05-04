@@ -1,0 +1,2 @@
+R=$1
+curl -s "https://api.github.com/users/$R/repos?per_page=150" | grep -o 'git@[^"]*'
