@@ -11,7 +11,7 @@ set -e
 
 mkdir -p build
 
-for ARCH in amd64 386 arm ppc64; do
+for ARCH in amd64; do # 386 arm ppc64; do
 	for OS in linux darwin windows netbsd; do
 		if [ "$OS" = "darwin" ] && [ "$ARCH" = "arm" ]; then
 			continue
