@@ -18,7 +18,7 @@ fi
 cd ${REPOS_PATH}
 
 # sanity
-(cd cpu60 && git pull)
+#(cd cpu60 && git pull)
 
 echo "Enter GitHub repo description"
 read DESC
