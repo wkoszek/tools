@@ -1,0 +1,4 @@
+#!/bin/sh
+wget --mirror            \
+     --html-extension    \
+     $1

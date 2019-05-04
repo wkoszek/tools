@@ -1,0 +1,9 @@
+#!/bin/sh
+
+URL=https://gitlab.com/api/v4/
+
+#curl -s $URL/projects/wkoszek/
+#GET /users/:user_id/projects
+#curl -s https://gitlab.com/api/v4/projects/wkoszek/repository/tree | jq '.'
+
+curl -s $URL/user/wkoszek/projects
