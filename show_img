@@ -1,3 +1,4 @@
 #!/bin/sh
 
+echo "=============== showing $1 ============================="
 dcm2pnm $1 | convert -resize 30% - png:- | ~/tools/imgcat
