@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dcm2pnm $1 | convert -resize 30% - png:- | ~/tools/imgcat
