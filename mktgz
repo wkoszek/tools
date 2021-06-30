@@ -1,0 +1,35 @@
+#!/bin/sh
+
+#set -x
+#set -e
+
+tmp=/tmp/_.zips
+mkdir -p $tmp
+
+THIS_DIR_ABS=`pwd`
+
+D=$1
+
+if [ "$D" = "." ]; then
+	THIS_DIR=`basename $THIS_DIR_ABS`
+	DIR=..
+else
+	THIS_DIR=`basename $D`
+	DIR=$THIS_DIR_ABS
+fi
+
+base=${THIS_DIR}.tgz
+dst=$tmp/$base
+
+(cd $DIR && tar --exclude=".git" -vczf $dst $THIS_DIR)
+
+echo "==="
+echo
+echo $dst
+echo
+echo "scp $dst w:/tmp"
+echo
+echo "$LOCATION_W/tmp/$base"
+echo
+echo "==="
+

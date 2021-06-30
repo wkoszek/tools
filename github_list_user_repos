@@ -1,2 +1,9 @@
 R=$1
-curl -s "https://api.github.com/users/$R/repos?per_page=150" | grep -o 'git@[^"]*'
+(
+	curl -s "https://api.github.com/users/$R/repos?type=all&per_page=150       " ;
+	curl -s "https://api.github.com/users/$R/repos?type=all&per_page=150&page=1" ;
+	curl -s "https://api.github.com/users/$R/repos?type=all&per_page=150&page=2" ;
+	curl -s "https://api.github.com/users/$R/repos?type=all&per_page=150&page=3" ;
+	curl -s "https://api.github.com/users/$R/repos?type=all&per_page=150&page=4" ;
+	curl -s "https://api.github.com/users/$R/repos?type=all&per_page=150&page=5" ;
+) | sort | uniq | grep -o 'git@[^"]*'

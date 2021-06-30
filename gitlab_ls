@@ -1,9 +1,11 @@
 #!/bin/sh
 
-URL=https://gitlab.com/api/v4/
+#set -x 
 
-#curl -s $URL/projects/wkoszek/
-#GET /users/:user_id/projects
-#curl -s https://gitlab.com/api/v4/projects/wkoszek/repository/tree | jq '.'
+TOKEN=`lpass show -j 5571568052 | jq -r '.[].note' | head -1`
 
-curl -s $URL/user/wkoszek/projects
+#echo ">$TOKEN<"
+
+export URL=https://gitlab.com/api/v4/
+
+curl --header "PRIVATE-TOKEN: $TOKEN" -s https://gitlab.com/api/v4/users/wkoszek/projects| jq -r ".[].name"
