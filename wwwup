@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+f = File.read("#{ENV['HOME']}/r/infra/dns/domains.yml")
+y = YAML.load(f)
+d_all = y["domains_clean"]
+
+dn = File.basename(Dir.getwd)
+
+if not d_all.include?(dn)
+  puts "Directory #{dn} isn't a WWW exportable stuff"
+else
+  system("rsync --exclude='.git/' -va . ubuntu@w:/var/www/#{dn}/")
+end

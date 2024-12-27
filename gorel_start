@@ -1,0 +1,87 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+	echo "gorel_start <service_name>"
+	exit
+fi
+
+SERVICE_NAME=$1
+SERVICE_USER=$SERVICE_NAME
+BINARY_NAME=$SERVICE_NAME
+
+mkdir -p debian/conf
+mkdir -p debian/scripts/systemd
+
+# ******** systemd config ***************************
+cat<<EOF > debian/scripts/systemd/${SERVICE_NAME}.service
+[Unit]
+Description=$SERVICE_NAME
+Wants=network.target network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/$BINARY_NAME
+#ExecReload=/bin/kill -HUP $MAINPID
+StandardOutput=inherit
+StandardError=inherit
+Restart=on-failure
+User=$SERVICE_USER
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
+
+
+
+SERVICE_USER=$SERVICE_NAME
+SERVICE_USER=$SERVICE_NAME
+
+
+
+
+
+
+
+
+
+
+# *********** service config ************************
+cat <<EOF > debian/conf/${SERVICE_NAME}.conf 
+# This is a config file
+EOF
+
+# ***********  pre-remove script ********************
+cat <<EOF > debian/scripts/preremove.sh
+systemctl stop ${SERVICE_NAME}
+systemctl disable ${SERVICE_NAME}
+rm /etc/systemd/system/${SERVICE_NAME}.service
+systemctl daemon-reload
+systemctl reset-failed
+EOF
+
+# ************  post install script *****************
+cat <<EOF > debian/scripts/postinstall.sh
+$SERVICE_NAME has been installed as a systemd service.
+
+To start/stop $SERVICE_NAME:
+
+sudo systemctl start $SERVICE_NAME
+sudo systemctl stop $SERVICE_NAME
+
+To enable/disable $SERVICE_NAME starting automatically on boot:
+
+sudo systemctl enable $SERVICE_NAME
+sudo systemctl disable $SERVICE_NAME
+
+To reload $SERVICE_NAME:
+
+sudo systemctl restart $SERVICE_NAME
+
+To view $SERVICE_NAME logs:
+
+journalctl -f -u $SERVICE_NAME
+
+EOF
