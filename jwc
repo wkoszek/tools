@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+
+def count_words_in_journal(filename):
+    """Parse a journal file with YAML frontmatter and count words in content."""
+    try:
+        with open(filename, 'r') as f:
+            content = f.read()
+        
+        # Check if file has frontmatter
+        if content.startswith('---'):
+            # Find the end of frontmatter (second ---)
+            parts = content.split('---', 2)
+            if len(parts) >= 3:
+                # parts[0] is empty, parts[1] is frontmatter, parts[2] is content
+                main_content = parts[2]
+            else:
+                # No closing --- found, treat everything after first --- as content
+                main_content = parts[1] if len(parts) > 1 else ""
+        else:
+            # No frontmatter, entire file is content
+            main_content = content
+        
+        # Remove leading/trailing whitespace
+        main_content = main_content.strip()
+        
+        # Count words (split on whitespace)
+        if main_content:
+            words = main_content.split()
+            word_count = len(words)
+        else:
+            word_count = 0
+        
+        return word_count
+        
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error reading file: {e}", file=sys.stderr)
+        sys.exit(1)
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: jwc <journal-file> [journal-file2 ...]")
+        print("       jwc *.md")
+        sys.exit(1)
+    
+    files = sys.argv[1:]
+    total_words = 0
+    
+    if len(files) == 1:
+        # Single file
+        word_count = count_words_in_journal(files[0])
+        print(f"{word_count} {files[0]}")
+        total_words = word_count
+    else:
+        # Multiple files
+        for filename in files:
+            word_count = count_words_in_journal(filename)
+            print(f"{word_count:6d} {filename}")
+            total_words += word_count
+        print(f"{total_words:6d} total")
+
+if __name__ == "__main__":
+    main()
